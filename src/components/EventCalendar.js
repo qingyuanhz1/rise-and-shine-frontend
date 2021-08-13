@@ -7,7 +7,6 @@ import momentDurationFormatSetup from 'moment-duration-format';
 momentDurationFormatSetup(moment);
 
 const EventCalendar = (props) => {
-    
     const allEvents = [...props.events]
     console.log(allEvents)
     
@@ -31,7 +30,7 @@ const EventCalendar = (props) => {
     
     if (organizedEvents.length === 0) {
         return <div/>
-    } else {
+    } else if (props.isLoggedIn) {
         return (
             <FullCalendar
             plugins={[ dayGridPlugin,  rrulePlugin]}
@@ -42,6 +41,8 @@ const EventCalendar = (props) => {
             events={organizedEvents}
             />
             )
+    } else if (!props.isLoggedIn) {
+        return <div/>
     }
     // return (
     //     <FullCalendar
