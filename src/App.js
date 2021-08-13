@@ -9,10 +9,12 @@ function App() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [events, setEvents] = useState("")
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const responseGoogle = (response) => {
     setName(response.profileObj.name)
     setEmail(response.profileObj.email)
+    setIsLoggedIn(true)
     console.log(email)
   }
 
@@ -28,13 +30,13 @@ function App() {
     <div className="App">
       <h1>Welcome {name}!</h1>
       <GoogleLogin
-    clientId="8883512831-jh64k5os3e6len7ij617j3k6r6vk3ms3.apps.googleusercontent.com"
-    buttonText="Login"
-    onSuccess={responseGoogle}
-    onFailure={responseGoogle}
-    cookiePolicy={'single_host_origin'}
-  />
-    <button onClick={getEventsClick}>Calendar</button>
+      clientId="8883512831-jh64k5os3e6len7ij617j3k6r6vk3ms3.apps.googleusercontent.com"
+      buttonText="Login"
+      onSuccess={responseGoogle}
+      onFailure={responseGoogle}
+      cookiePolicy={'single_host_origin'}
+      />
+      <button onClick={getEventsClick}>{isLoggedIn ? 'Calendar' : null}</button>
     <EventCalendar
     events={events}/>
     </div>
