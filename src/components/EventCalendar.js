@@ -3,10 +3,13 @@ import FullCalendar from '@fullcalendar/react' // must go before plugins
 import rrulePlugin from '@fullcalendar/rrule'
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import moment from 'moment';
+import { InteractionPlugin } from '@fullcalendar/interaction';
 import momentDurationFormatSetup from 'moment-duration-format';
 momentDurationFormatSetup(moment);
 
 const EventCalendar = (props) => {
+
+    console.log(props)
     const allEvents = [...props.events]
     console.log(allEvents)
     
@@ -37,8 +40,8 @@ const EventCalendar = (props) => {
             initialView="dayGridMonth"
             showNonCurrentDates={false}
             displayEventEnd={true}
-            displayEventTime={true}
             events={organizedEvents}
+            eventClick={props.onRequestOpen}
             />
             )
     } else if (!props.isLoggedIn) {

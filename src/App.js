@@ -5,13 +5,42 @@ import { GoogleLogout } from 'react-google-login';
 import './App.css';
 import EventCalendar  from './components/EventCalendar';
 import NewEventForm from './components/NewEventForm';
+import Modal from './components/Modal';
+
+const customStyles = {
+  content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+  },
+};
+
+Modal.setAppElement(document.getElementById('root'));
 
 function App() {
+  // let subtitle;
 
+  const [modalIsOpen, setIsOpen] = useState(true);
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [events, setEvents] = useState("")
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
+  const openModal = () => {
+    setIsOpen(true);
+  }
+
+  const afterOpenModal = () => {
+    // references are now sync'd and can be accessed.
+    // subtitle.style.color = '#f00';
+  }
+
+  const closeModal = () => {
+    setIsOpen(false);
+  }
 
   const loginSuccess = (response) => {
     setName(response.profileObj.name)
@@ -33,12 +62,21 @@ function App() {
       console.log('Error:', error);
 })}
 
+  const refreshCalendarClick = () => {
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}`).then((response) => {
+      console.log(response.data)
+      window.open(response.data,"_blank")
+    }).catch((error) => {
+      console.log('Error:', error);
+  })}
+
   const createNewEvent = (newEvent) => {
     axios.post(`${process.env.REACT_APP_BACKEND_URL}/events`, newEvent).then((response) => {
       console.log(response.data)
     }).catch((error) => {
       console.log('Error:', error);
     })}
+
 
   return (
     <div className="App">
@@ -58,7 +96,8 @@ function App() {
       />
       </section>
       
-      <button onClick={getEventsClick}>{isLoggedIn ? 'Calendar' : null}</button>
+      <button onClick={getEventsClick}>{isLoggedIn ? 'View Calendar' : null}</button>
+      <button onClick={refreshCalendarClick}>{isLoggedIn ? 'Refresh Calendar' : null}</button>
       <section>
         {isLoggedIn && events ?
         <>
@@ -73,9 +112,25 @@ function App() {
       <EventCalendar
       events={events}
       isLoggedIn={isLoggedIn}
-      setIsLoggedIn={setIsLoggedIn}/>
-        </section>
-  
+      setIsLoggedIn={setIsLoggedIn}
+      onRequestOpen={openModal}
+      isOpen={modalIsOpen}
+      onAfterOpen={afterOpenModal}
+      onRequestClose={closeModal}
+      style={customStyles}
+      />
+      </section>
+      
+      <section>
+      <Modal
+        onRequestOpen={openModal}
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+      />
+      </section>
+      
     </div>
   );
 }

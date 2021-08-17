@@ -5,6 +5,7 @@
   "dependencies": {
     "@fullcalendar/core": "^5.9.0",
     "@fullcalendar/daygrid": "^5.9.0",
+    "@fullcalendar/interaction": "^5.9.0",
     "@fullcalendar/react": "^5.9.0",
     "@fullcalendar/rrule": "^5.9.0",
     "@testing-library/jest-dom": "^5.11.4",
@@ -16,6 +17,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-google-login": "^5.2.2",
+    "react-modal": "^3.14.3",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
   },
