@@ -3,9 +3,12 @@ import axios from 'axios';
 import {GoogleLogin} from 'react-google-login';
 import { GoogleLogout } from 'react-google-login';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import EventCalendar  from './components/EventCalendar';
 import NewEventForm from './components/NewEventForm';
 import Modal from './components/Modal';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+
 
 const customStyles = {
   content: {
@@ -80,24 +83,39 @@ function App() {
 
   return (
     <div className="App">
-      <h1>{isLoggedIn ? `Welcome ${name}!`: 'Welcome To Rise & Shine'}</h1>
-      <section>
-      <GoogleLogin
-      clientId="8883512831-jh64k5os3e6len7ij617j3k6r6vk3ms3.apps.googleusercontent.com"
-      buttonText="Login"
-      onSuccess={loginSuccess}
-      cookiePolicy={'single_host_origin'}
-      />
-      <GoogleLogout
-      clientId="8883512831-jh64k5os3e6len7ij617j3k6r6vk3ms3.apps.googleusercontent.com"
-      buttonText="Logout"
-      onLogoutSuccess={logoutSuccess}
-      cookiePolicy={'single_host_origin'}
-      />
-      </section>
-      
-      <button onClick={getEventsClick}>{isLoggedIn ? 'View Calendar' : null}</button>
-      <button onClick={refreshCalendarClick}>{isLoggedIn ? 'Refresh Calendar' : null}</button>
+      <Navbar bg="dark" variant="dark" expand="lg">
+        <Container>
+  
+          <Navbar.Brand className="justify-end-left" >
+            {isLoggedIn ? `Welcome ${name}!`: 'Welcome To Rise & Shine'}
+          </Navbar.Brand>
+        
+
+            <GoogleLogin
+            clientId="8883512831-jh64k5os3e6len7ij617j3k6r6vk3ms3.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={loginSuccess}
+            cookiePolicy={'single_host_origin'}
+            />
+            <GoogleLogout
+            clientId="8883512831-jh64k5os3e6len7ij617j3k6r6vk3ms3.apps.googleusercontent.com"
+            buttonText="Logout"
+            onLogoutSuccess={logoutSuccess}
+            cookiePolicy={'single_host_origin'}
+            />
+
+          
+          <button onClick={getEventsClick}>{isLoggedIn ? 'View Calendar' : null}</button>
+          <button onClick={refreshCalendarClick}>{isLoggedIn ? 'Refresh Calendar' : null}</button>
+        
+
+         
+          
+        </Container>
+      </Navbar>
+
+
+
       <section>
         {isLoggedIn && events ?
         <>
@@ -121,7 +139,7 @@ function App() {
       />
       </section>
       
-      <section>
+      {/* <section>
       <Modal
         onRequestOpen={openModal}
         isOpen={modalIsOpen}
@@ -129,7 +147,7 @@ function App() {
         onRequestClose={closeModal}
         style={customStyles}
       />
-      </section>
+      </section> */}
       
     </div>
   );
