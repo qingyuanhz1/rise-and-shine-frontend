@@ -44,6 +44,10 @@ function App() {
   const closeModal = () => {
     setIsOpen(false);
   }
+  
+  const responseGoogle = (response) => {
+    console.log(response);
+  }
 
   const loginSuccess = (response) => {
     setName(response.profileObj.name)
@@ -92,15 +96,19 @@ function App() {
         
 
             <GoogleLogin
+            disabled={false}
             clientId="8883512831-jh64k5os3e6len7ij617j3k6r6vk3ms3.apps.googleusercontent.com"
             buttonText="Login"
             onSuccess={loginSuccess}
+            onFailure={responseGoogle}
             cookiePolicy={'single_host_origin'}
             />
             <GoogleLogout
+            disabled={false}
             clientId="8883512831-jh64k5os3e6len7ij617j3k6r6vk3ms3.apps.googleusercontent.com"
             buttonText="Logout"
             onLogoutSuccess={logoutSuccess}
+            onFailure={responseGoogle}
             cookiePolicy={'single_host_origin'}
             />
 
@@ -109,7 +117,7 @@ function App() {
           <button onClick={refreshCalendarClick}>{isLoggedIn ? 'Refresh Calendar' : null}</button>
         
 
-         
+        
           
         </Container>
       </Navbar>
